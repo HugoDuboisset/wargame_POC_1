@@ -1,41 +1,31 @@
+using Wargame.Application.Interfaces;
+using Wargame.Infrastructure.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// 1. Ajouter le support des contrôleurs
+builder.Services.AddControllers();
+
+// 2. Configurer l'injection de dépendances pour le Repository
+// On calcule le chemin relatif pour pointer vers data/units.json (qui est à la racine du monorepo)
+var dataPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "data", "units.json"));
+builder.Services.AddScoped<IUnitRepository>(provider => new JsonUnitRepository(dataPath));
+
+// 3. Configurer les règles CORS pour autoriser l'application Vite / React
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
-app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+// 4. Activer les middlewares dans le bon ordre
+app.UseCors("AllowReactApp");
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
