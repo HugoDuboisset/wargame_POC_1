@@ -1,0 +1,64 @@
+[
+  {
+    "unitId": "unit-cmd-vet-001",
+    "name": "Escouade de Commandement Vétéran",
+    "faction": "Force Opérationnelle Générique",
+    "pointsCost": 100,
+    "baseSizeInches": 1.0,
+    "profile": {
+      "m": 6,
+      "t": 6,
+      "c": 6,
+      "i": 4,
+      "mo": 3,
+      "ca": 2
+    },
+    "models": [
+      {
+        "modelId": "m-001",
+        "name": "Vétéran Sniper",
+        "maxHp": 1,
+        "currentHp": 1,
+        "position": { "x": 10, "y": 10 },
+        "rangedWeapon": "Fusil de Précision",
+        "meleeWeapon": "Couteau de Combat"
+      },
+      {
+        "modelId": "m-002",
+        "name": "Vétéran Assaut",
+        "maxHp": 1,
+        "currentHp": 1,
+        "position": { "x": 11, "y": 10 },
+        "rangedWeapon": "Fusil d'Assaut Standard",
+        "meleeWeapon": "Couteau de Combat"
+      },
+      {
+        "modelId": "m-003",
+        "name": "Vétéran Assaut",
+        "maxHp": 1,
+        "currentHp": 1,
+        "position": { "x": 10, "y": 11 },
+        "rangedWeapon": "Fusil d'Assaut Standard",
+        "meleeWeapon": "Couteau de Combat"
+      },
+      {
+        "modelId": "m-004",
+        "name": "Vétéran Assaut",
+        "maxHp": 1,
+        "currentHp": 1,
+        "position": { "x": 9, "y": 10 },
+        "rangedWeapon": "Fusil d'Assaut Standard",
+        "meleeWeapon": "Couteau de Combat"
+      },
+      {
+        "modelId": "m-005",
+        "name": "Vétéran Assaut",
+        "maxHp": 1,
+        "currentHp": 1,
+        "position": { "x": 10, "y": 9 },
+        "rangedWeapon": "Fusil d'Assaut Standard",
+        "meleeWeapon": "Couteau de Combat"
+      }
+    ]
+  }
+]
